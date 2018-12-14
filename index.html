@@ -27,11 +27,10 @@
 
 <body>
     <div id="map"></div>
-    <span id="demo" value="12:00 AM"></span></p>
-    </div>
+    <!-- <span id="demo" value="12:00 AM"></span>
+    </div> -->
     <div class="slidecontainer">
-        <p>Time Range: <span class="slider-time">9:00 AM</span> - <span class="slider-time2">5:00 PM</span>
-        </p>
+        <p>Time Range: <span class="slider-time">9:00 AM</span> - <span class="slider-time2">5:00 PM</span></p>
         <div class="sliders_step1">
             <div id="slider-range"></div>
         </div>
@@ -47,22 +46,35 @@
         var myService = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0'
 
         var trucks
-		
-		function removeAllLayers() {
-			if (map._layers == undefined)
-				return;
-				
-			var index = 0;
-			for (var key in map._layers) {
-				index += 1;
-				if (index == 1)
-					continue;
-					
-				if (map._layers.hasOwnProperty(key)) {   
-					map.removeLayer(map._layers[key]);
-				}
-			}
-		}
+
+        L.esri.query({
+            url: myService
+        }).where("(date_cst BETWEEN DATE '" + startDateQuery + "' AND DATE '" + endDateQuery + "')").run(function (error, neighborhoods) {
+            // draw neighborhood on the map
+            trucks = L.geoJSON(neighborhoods);
+            removeAllLayers();
+            map.addLayer(trucks);
+            trucks.bindPopup(function (layer) {
+                return L.Util.template('<p class="custom-popup"><span id="popup-header">{Timestamp_CST}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+            });
+        });
+
+
+        function removeAllLayers() {
+            if (map._layers == undefined)
+                return;
+
+            var index = 0;
+            for (var key in map._layers) {
+                index += 1;
+                if (index == 1)
+                    continue;
+
+                if (map._layers.hasOwnProperty(key)) {
+                    map.removeLayer(map._layers[key]);
+                }
+            }
+        }
 
         function slideChange(time1, time2) {
             L.esri.query({
@@ -70,14 +82,14 @@
             }).where("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')").run(function (error, neighborhoods) {
                 // draw neighborhood on the map
                 trucks = L.geoJSON(neighborhoods);
-				removeAllLayers();
+                removeAllLayers();
                 map.addLayer(trucks);
                 trucks.bindPopup(function (layer) {
-                    return L.Util.template('<p>{Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+                    return L.Util.template('<p class="custom-popup"><span id="popup-header">{Timestamp_CST}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
                 });
             });
         }
-        
+
         $("#slider-range").slider({
             range: true,
             min: 0,
@@ -134,9 +146,9 @@
                     minutes2 = minutes2 + " AM";
                 }
                 //7/28/16 10:43 AM
-                var time2 = '7/28/16 ' + hours2 + ':' + minutes2 
+                var time2 = '7/28/16 ' + hours2 + ':' + minutes2
                 $('.slider-time2').html(time2);
-                
+
                 console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
                 // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
                 slideChange(time1, time2)
@@ -148,7 +160,7 @@
             // }
         });
 
-       
+
     </script>
 
 </body>
