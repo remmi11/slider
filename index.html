@@ -48,26 +48,6 @@
 
         var trucks
 
-        // L.esri.query({
-        //     url: myService
-        //     //query.where = "(date_cst >= '" + startDateQuery + "') AND (date_cst <= '" + endDateQuery + "')";
-        // }).where("(date_cst BETWEEN DATE '" + startDateQuery + "' AND DATE '" + endDateQuery + "')").run(function (error, neighborhoods) {
-        //     // draw neighborhood on the map
-        //     trucks = L.geoJSON(neighborhoods);
-        //     map.addLayer(trucks);
-        //     trucks.bindPopup(function (layer) {
-        //         return L.Util.template('<p>{Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
-        //     });
-        // });
-
-        // var busStops = L.esri.featureLayer({
-        //     url: myService,
-        //     timeField: 'date_cst',
-        //     from: startDateQuery,
-        //     to: endDateQuery,
-        //     timeFilterMode: "server"
-        // }).addTo(map);
-
         function slideChange(time1, time2) {
             L.esri.query({
                 url: myService
@@ -81,25 +61,6 @@
             });
         }
         
-        // function slideChange(time1, time2) {
-        //     L.esri.featureLayer({
-        //         url: myService,
-        //         timeField: 'date_cst',
-        //         from: time1,
-        //         to: time2
-        //     }).addTo(map);
-        // }
-
-    //     function slideChange(time1, time2) {
-    //         L.esri.featureLayer({
-    //         url: myService,
-    //         timeField: 'date_cst',
-    //         from: time1,
-    //         to: time2,
-    //         timeFilterMode: "server"
-    //     }).addTo(map);
-    // }
-
         $("#slider-range").slider({
             range: true,
             min: 0,
@@ -170,73 +131,7 @@
             // }
         });
 
-        // $("#slider-range").addEventListener("change", function () {
-
-        // });
-
-        // time slider
-        // var slider = document.getElementById("myRange");
-        // var output = document.getElementById("demo");
-        // output.innerHTML = slider.value;
-
-        // slider.oninput = function () {
-        //     //     output.innerHTML = this.value;
-        //     // }
-        //     // $("#myRange").on("change", function () {
-        //     var time = IntToTime($(this).val());
-        //     output.innerHTML = time + " " + ext;
-        //     // $("#theTime .ui-slider-handle").prop("title", time);
-        // };
-
-        // function IntToTime(val) {
-        //     var hours = parseInt(val / 60);
-        //     var minutes = val - (hours * 60);
-        //     // var time = hours + ':' + (min < 10 ? '0' + min : min);
-        //     // console.log(time)
-        //     // return time;
-        //     console.log(convertTime(hours, minutes))
-        //     // $('#theTime .timeLabel').html(hours + ':' + minutes + ext);
-        //     return convertTime(hours, minutes)
-        // }
-
-        // function convertTime(hours, minutes) {
-        //     if (hours.length == 1) hours = '0' + hours;
-        //     if (minutes.length == 1) minutes = '0' + minutes;
-        //     if (minutes == 0) minutes = '00';
-        //     if (minutes.length == 3) minutes = '00';
-
-        //     // Convert 24 hours format into 12
-
-        //     if (hours >= 12) {
-        //         ext = ' PM';
-        //     }
-        //     else {
-        //         ext = ' AM';
-        //     }
-
-        //     if (hours > 12) {
-        //         hours = hours - 12;
-        //     }
-        //     if (hours < 1) {
-        //         hours = 12;
-        //     }
-
-        //     var time = hours + ':' + (0 < minutes && minutes < 10 ? '0' + minutes : minutes);
-
-        //     // var time = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
-        //     console.log(time)
-
-        //     return time
-        //     return ext
-        // }
-
-        //var wfs = 'https://dservices5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/services/trucks___7_28_16/WFSServer?service=wfs&request=getcapabilities'
-        //https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_18/FeatureServer/0
-        //"date_cst" = date '2009-01-01 00:00:00' 
-
-        //https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_18/FeatureServer/0/query?where=1=1&objectIds=&time=
-
-
+       
     </script>
 
 </body>
