@@ -47,6 +47,22 @@
         var myService = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0'
 
         var trucks
+		
+		function removeAllLayers() {
+			if (map._layers == undefined)
+				return;
+				
+			var index = 0;
+			for (var key in map._layers) {
+				index += 1;
+				if (index == 1)
+					continue;
+					
+				if (map._layers.hasOwnProperty(key)) {   
+					map.removeLayer(map._layers[key]);
+				}
+			}
+		}
 
         function slideChange(time1, time2) {
             L.esri.query({
@@ -54,6 +70,7 @@
             }).where("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')").run(function (error, neighborhoods) {
                 // draw neighborhood on the map
                 trucks = L.geoJSON(neighborhoods);
+				removeAllLayers();
                 map.addLayer(trucks);
                 trucks.bindPopup(function (layer) {
                     return L.Util.template('<p>{Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
