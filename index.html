@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Map</title>
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
+        crossorigin=""></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <div id="map"></div>
+    <span id="demo" value="12:00 AM"></span></p>
+    </div>
+    <div class="slidecontainer">
+        <p>Time Range: <span class="slider-time">9:00 AM</span> - <span class="slider-time2">5:00 PM</span>
+        </p>
+        <div class="sliders_step1">
+            <div id="slider-range"></div>
+        </div>
+        <!-- <button onclick="myFunction()"></button> -->
+    </div>
+    <script>
+        //7/28/16 4:41 AM
+        var startDateQuery = '7/28/16 12:01:00 AM';
+        var endDateQuery = '7/28/16 11:59:00 PM';
+
+        var map = L.map('map').setView([32.70573349, -103.117694], 15);
+        L.esri.basemapLayer("Topographic").addTo(map);
+        var myService = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0'
+
+        var trucks
+
+        // L.esri.query({
+        //     url: myService
+        //     //query.where = "(date_cst >= '" + startDateQuery + "') AND (date_cst <= '" + endDateQuery + "')";
+        // }).where("(date_cst BETWEEN DATE '" + startDateQuery + "' AND DATE '" + endDateQuery + "')").run(function (error, neighborhoods) {
+        //     // draw neighborhood on the map
+        //     trucks = L.geoJSON(neighborhoods);
+        //     map.addLayer(trucks);
+        //     trucks.bindPopup(function (layer) {
+        //         return L.Util.template('<p>{Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+        //     });
+        // });
+
+        // var busStops = L.esri.featureLayer({
+        //     url: myService,
+        //     timeField: 'date_cst',
+        //     from: startDateQuery,
+        //     to: endDateQuery,
+        //     timeFilterMode: "server"
+        // }).addTo(map);
+
+        function slideChange(time1, time2) {
+            L.esri.query({
+                url: myService
+            }).where("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')").run(function (error, neighborhoods) {
+                // draw neighborhood on the map
+                trucks = L.geoJSON(neighborhoods);
+                map.addLayer(trucks);
+                trucks.bindPopup(function (layer) {
+                    return L.Util.template('<p>{Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+                });
+            });
+        }
+        
+        // function slideChange(time1, time2) {
+        //     L.esri.featureLayer({
+        //         url: myService,
+        //         timeField: 'date_cst',
+        //         from: time1,
+        //         to: time2
+        //     }).addTo(map);
+        // }
+
+    //     function slideChange(time1, time2) {
+    //         L.esri.featureLayer({
+    //         url: myService,
+    //         timeField: 'date_cst',
+    //         from: time1,
+    //         to: time2,
+    //         timeFilterMode: "server"
+    //     }).addTo(map);
+    // }
+
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 1440,
+            step: 15,
+            values: [0, 1440],
+            slide: function (e, ui) {
+
+                var hours1 = Math.floor(ui.values[0] / 60);
+                var minutes1 = ui.values[0] - (hours1 * 60);
+
+                if (hours1.length == 1) hours1 = '0' + hours1;
+                if (minutes1.length == 1) minutes1 = '0' + minutes1;
+                if (minutes1 == 0) minutes1 = '00';
+                if (hours1 >= 12) {
+                    if (hours1 == 12) {
+                        hours1 = hours1;
+                        minutes1 = minutes1 + " PM";
+                    } else {
+                        hours1 = hours1 - 12;
+                        minutes1 = minutes1 + " PM";
+                    }
+                } else {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " AM";
+                }
+                if (hours1 == 0) {
+                    hours1 = 12;
+                    minutes1 = minutes1;
+                }
+
+                var time1 = '7/28/16 ' + hours1 + ':' + minutes1
+                $('.slider-time').html(time1);
+
+                var hours2 = Math.floor(ui.values[1] / 60);
+                var minutes2 = ui.values[1] - (hours2 * 60);
+
+                if (hours2.length == 1) hours2 = '0' + hours2;
+                if (minutes2.length == 1) minutes2 = '0' + minutes2;
+                if (minutes2 == 0) minutes2 = '00';
+                if (hours2 >= 12) {
+                    if (hours2 == 12) {
+                        hours2 = hours2;
+                        minutes2 = minutes2 + " PM";
+                    } else if (hours2 == 24) {
+                        hours2 = 11;
+                        minutes2 = "59 PM";
+                    } else {
+                        hours2 = hours2 - 12;
+                        minutes2 = minutes2 + " PM";
+                    }
+                } else {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " AM";
+                }
+                //7/28/16 10:43 AM
+                var time2 = '7/28/16 ' + hours2 + ':' + minutes2 
+                $('.slider-time2').html(time2);
+                
+                console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+                // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
+                slideChange(time1, time2)
+            }
+            // change: function (e, ui) {
+            //     console.log('you clicked me!');
+            //     trucks.clearLayers();
+            //     map.removeLayer(trucks);
+            // }
+        });
+
+        // $("#slider-range").addEventListener("change", function () {
+
+        // });
+
+        // time slider
+        // var slider = document.getElementById("myRange");
+        // var output = document.getElementById("demo");
+        // output.innerHTML = slider.value;
+
+        // slider.oninput = function () {
+        //     //     output.innerHTML = this.value;
+        //     // }
+        //     // $("#myRange").on("change", function () {
+        //     var time = IntToTime($(this).val());
+        //     output.innerHTML = time + " " + ext;
+        //     // $("#theTime .ui-slider-handle").prop("title", time);
+        // };
+
+        // function IntToTime(val) {
+        //     var hours = parseInt(val / 60);
+        //     var minutes = val - (hours * 60);
+        //     // var time = hours + ':' + (min < 10 ? '0' + min : min);
+        //     // console.log(time)
+        //     // return time;
+        //     console.log(convertTime(hours, minutes))
+        //     // $('#theTime .timeLabel').html(hours + ':' + minutes + ext);
+        //     return convertTime(hours, minutes)
+        // }
+
+        // function convertTime(hours, minutes) {
+        //     if (hours.length == 1) hours = '0' + hours;
+        //     if (minutes.length == 1) minutes = '0' + minutes;
+        //     if (minutes == 0) minutes = '00';
+        //     if (minutes.length == 3) minutes = '00';
+
+        //     // Convert 24 hours format into 12
+
+        //     if (hours >= 12) {
+        //         ext = ' PM';
+        //     }
+        //     else {
+        //         ext = ' AM';
+        //     }
+
+        //     if (hours > 12) {
+        //         hours = hours - 12;
+        //     }
+        //     if (hours < 1) {
+        //         hours = 12;
+        //     }
+
+        //     var time = hours + ':' + (0 < minutes && minutes < 10 ? '0' + minutes : minutes);
+
+        //     // var time = hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+        //     console.log(time)
+
+        //     return time
+        //     return ext
+        // }
+
+        //var wfs = 'https://dservices5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/services/trucks___7_28_16/WFSServer?service=wfs&request=getcapabilities'
+        //https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_18/FeatureServer/0
+        //"date_cst" = date '2009-01-01 00:00:00' 
+
+        //https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_18/FeatureServer/0/query?where=1=1&objectIds=&time=
+
+
+    </script>
+
+</body>
+
+</html>
