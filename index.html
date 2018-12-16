@@ -101,7 +101,8 @@
         var endDateQuery = '7/28/16 11:59:00 PM';
 
         var map = L.map('map').setView([32.70573349, -103.117694], 15);
-        L.esri.basemapLayer("Topographic").addTo(map);
+        L.esri.basemapLayer('Imagery').addTo(map);
+        L.esri.basemapLayer('ImageryTransportation').addTo(map);
         var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0';
         var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_24_16/FeatureServer/0';
         var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
