@@ -19,6 +19,8 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <link rel="stylesheet" href="css/style.css">
@@ -27,37 +29,94 @@
 
 <body>
     <div id="map"></div>
-    <!-- <span id="demo" value="12:00 AM"></span>
-    </div> -->
-    <div class="slidecontainer">
-        <p>Time Range: <span class="slider-time">9:00 AM</span> - <span class="slider-time2">5:00 PM</span></p>
-        <div class="sliders_step1">
-            <div id="slider-range"></div>
+    <div class="bs-example">
+        <div class="panel-group" id="accordion">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            7/28/16
+                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="slidecontainer">
+                            <p>Time Range: <span class="slider-time1_1">9:00 AM</span> - <span class="slider-time1_2">5:00
+                                    PM</span></p>
+                            <div class="sliders_step1">
+                                <div id="slider-range1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            8/24/16
+                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="slidecontainer">
+                            <p>Time Range: <span class="slider-time2_1">9:00 AM</span> - <span class="slider-time2_2">5:00
+                                    PM</span></p>
+                            <div class="sliders_step1">
+                                <div id="slider-range2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            8/28/16
+                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="slidecontainer">
+                            <p>Time Range: <span class="slider-time3_1">9:00 AM</span> - <span class="slider-time3_2">5:00
+                                    PM</span></p>
+                            <div class="sliders_step1">
+                                <div id="slider-range3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- <button onclick="myFunction()"></button> -->
     </div>
     <script>
-        //7/28/16 4:41 AM
         var startDateQuery = '7/28/16 12:01:00 AM';
         var endDateQuery = '7/28/16 11:59:00 PM';
 
         var map = L.map('map').setView([32.70573349, -103.117694], 15);
         L.esri.basemapLayer("Topographic").addTo(map);
-        var myService = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0'
+        var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0';
+        var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_24_16/FeatureServer/0';
+        var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
 
-        var trucks
-
-        L.esri.query({
-            url: myService
-        }).where("(date_cst BETWEEN DATE '" + startDateQuery + "' AND DATE '" + endDateQuery + "')").run(function (error, neighborhoods) {
-            // draw neighborhood on the map
-            trucks = L.geoJSON(neighborhoods);
-            removeAllLayers();
-            map.addLayer(trucks);
-            trucks.bindPopup(function (layer) {
-                return L.Util.template('<p class="custom-popup"><span id="popup-header">{Timestamp_CST}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
-            });
-        });
+        // L.esri.query({
+        //     url: myService1
+        // }).where("(date_cst BETWEEN DATE '" + startDateQuery + "' AND DATE '" + endDateQuery + "')").run(function (error, neighborhoods) {
+        //     // draw neighborhood on the map
+        //     trucks = L.geoJSON(neighborhoods);
+        //     removeAllLayers();
+        //     map.addLayer(trucks);
+        //     trucks.bindPopup(function (layer) {
+        //         return L.Util.template('<p class="custom-popup"><span id="popup-header">{Timestamp_CST}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+        //     });
+        // });
 
 
         function removeAllLayers() {
@@ -76,21 +135,22 @@
             }
         }
 
-        function slideChange(time1, time2) {
+        function slideChange(time1, time2, service) {
             L.esri.query({
-                url: myService
+                url: service
             }).where("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')").run(function (error, neighborhoods) {
                 // draw neighborhood on the map
                 trucks = L.geoJSON(neighborhoods);
                 removeAllLayers();
                 map.addLayer(trucks);
                 trucks.bindPopup(function (layer) {
-                    return L.Util.template('<p class="custom-popup"><span id="popup-header">{Timestamp_CST}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+                    return L.Util.template('<p class="custom-popup"><span id="popup-header">{date_cst2}</span><br>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
                 });
             });
         }
 
-        $("#slider-range").slider({
+        //7/28/16
+        $("#slider-range1").slider({
             range: true,
             min: 0,
             max: 1440,
@@ -122,7 +182,7 @@
                 }
 
                 var time1 = '7/28/16 ' + hours1 + ':' + minutes1
-                $('.slider-time').html(time1);
+                $('.slider-time1_1').html(time1);
 
                 var hours2 = Math.floor(ui.values[1] / 60);
                 var minutes2 = ui.values[1] - (hours2 * 60);
@@ -147,21 +207,149 @@
                 }
                 //7/28/16 10:43 AM
                 var time2 = '7/28/16 ' + hours2 + ':' + minutes2
-                $('.slider-time2').html(time2);
+                $('.slider-time1_2').html(time2);
 
                 console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
                 // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
-                slideChange(time1, time2)
+                slideChange(time1, time2, myService1)
             }
-            // change: function (e, ui) {
-            //     console.log('you clicked me!');
-            //     trucks.clearLayers();
-            //     map.removeLayer(trucks);
-            // }
         });
 
+        //8/24/16
+        $("#slider-range2").slider({
+            range: true,
+            min: 0,
+            max: 1440,
+            step: 15,
+            values: [0, 1440],
+            slide: function (e, ui) {
+
+                var hours1 = Math.floor(ui.values[0] / 60);
+                var minutes1 = ui.values[0] - (hours1 * 60);
+
+                if (hours1.length == 1) hours1 = '0' + hours1;
+                if (minutes1.length == 1) minutes1 = '0' + minutes1;
+                if (minutes1 == 0) minutes1 = '00';
+                if (hours1 >= 12) {
+                    if (hours1 == 12) {
+                        hours1 = hours1;
+                        minutes1 = minutes1 + " PM";
+                    } else {
+                        hours1 = hours1 - 12;
+                        minutes1 = minutes1 + " PM";
+                    }
+                } else {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " AM";
+                }
+                if (hours1 == 0) {
+                    hours1 = 12;
+                    minutes1 = minutes1;
+                }
+
+                var time1 = '8/24/16 ' + hours1 + ':' + minutes1
+                $('.slider-time2_1').html(time1);
+
+                var hours2 = Math.floor(ui.values[1] / 60);
+                var minutes2 = ui.values[1] - (hours2 * 60);
+
+                if (hours2.length == 1) hours2 = '0' + hours2;
+                if (minutes2.length == 1) minutes2 = '0' + minutes2;
+                if (minutes2 == 0) minutes2 = '00';
+                if (hours2 >= 12) {
+                    if (hours2 == 12) {
+                        hours2 = hours2;
+                        minutes2 = minutes2 + " PM";
+                    } else if (hours2 == 24) {
+                        hours2 = 11;
+                        minutes2 = "59 PM";
+                    } else {
+                        hours2 = hours2 - 12;
+                        minutes2 = minutes2 + " PM";
+                    }
+                } else {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " AM";
+                }
+                //7/28/16 10:43 AM
+                var time2 = '8/24/16 ' + hours2 + ':' + minutes2
+                $('.slider-time2_2').html(time2);
+
+                console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+                // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
+                slideChange(time1, time2, myService2)
+            }
+        });
+
+        //8/28/16
+        $("#slider-range3").slider({
+            range: true,
+            min: 0,
+            max: 1440,
+            step: 15,
+            values: [0, 1440],
+            slide: function (e, ui) {
+
+                var hours1 = Math.floor(ui.values[0] / 60);
+                var minutes1 = ui.values[0] - (hours1 * 60);
+
+                if (hours1.length == 1) hours1 = '0' + hours1;
+                if (minutes1.length == 1) minutes1 = '0' + minutes1;
+                if (minutes1 == 0) minutes1 = '00';
+                if (hours1 >= 12) {
+                    if (hours1 == 12) {
+                        hours1 = hours1;
+                        minutes1 = minutes1 + " PM";
+                    } else {
+                        hours1 = hours1 - 12;
+                        minutes1 = minutes1 + " PM";
+                    }
+                } else {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " AM";
+                }
+                if (hours1 == 0) {
+                    hours1 = 12;
+                    minutes1 = minutes1;
+                }
+
+                var time1 = '8/28/16 ' + hours1 + ':' + minutes1
+                $('.slider-time3_1').html(time1);
+
+                var hours2 = Math.floor(ui.values[1] / 60);
+                var minutes2 = ui.values[1] - (hours2 * 60);
+
+                if (hours2.length == 1) hours2 = '0' + hours2;
+                if (minutes2.length == 1) minutes2 = '0' + minutes2;
+                if (minutes2 == 0) minutes2 = '00';
+                if (hours2 >= 12) {
+                    if (hours2 == 12) {
+                        hours2 = hours2;
+                        minutes2 = minutes2 + " PM";
+                    } else if (hours2 == 24) {
+                        hours2 = 11;
+                        minutes2 = "59 PM";
+                    } else {
+                        hours2 = hours2 - 12;
+                        minutes2 = minutes2 + " PM";
+                    }
+                } else {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " AM";
+                }
+                //7/28/16 10:43 AM
+                var time2 = '8/28/16 ' + hours2 + ':' + minutes2
+                $('.slider-time3_2').html(time2);
+
+                console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+                // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
+                slideChange(time1, time2, myService3)
+            }
+        });
 
     </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 
