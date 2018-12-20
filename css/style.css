@@ -7,17 +7,9 @@ body {
 }
 
 #map {
-    margin: 0;
-    padding: 0;
     width: 100%;
-    height: 80%;
-}
-
-.bs-example {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 20%;
+    height: 100%;
+    position: fixed;
 }
 
 .ui-slider-horizontal {
@@ -142,8 +134,43 @@ body {
 }
 
 #popup-header {
-  padding: 5px;
-  margin-bottom: 5px;
-  text-align: center;
-  color: #ffffff;
+    padding: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    color: #ffffff;
+}
+
+/* .bs-example {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  z-index: 3;
+  position: relative;
+  height: 200px;
+  padding: 0px 20px;
+  bottom: 0px;
+  width: 100%;
+} */
+
+/* 
+.closebtn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+} */
+.navbar {
+    margin-bottom: 0px;
+}
+
+.bs-example {
+    z-index: 1000;
+    /* bottom: -200px; */
+    height: 140px;
+    width: 100%;
+    display: none;
+    position:absolute;
+    left:0;
+    bottom:0;
 }
