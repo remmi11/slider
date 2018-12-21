@@ -174,3 +174,19 @@ body {
     left:0;
     bottom:0;
 }
+
+.navbar {
+    border-radius: 0px;
+}
+
+#clearMap {
+    z-index: 1000;
+    /* bottom: -200px; */
+    height: 20px;
+    width: 40px;
+    /* display: none; */
+    position:absolute;
+    left:50px;
+    bottom:200px;
+    background-color: #1077bd;
+}
