@@ -5,11 +5,14 @@ var endDateQuery = '7/28/16 11:59:00 PM';
 var satellite = L.esri.basemapLayer('Imagery');
 var roads = L.esri.basemapLayer('ImageryTransportation');
 var topographic = L.esri.basemapLayer('Topographic');
-var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_16(3)/FeatureServer/0';
+var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0';
+//var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_16(3)/FeatureServer/0';
+//     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0',
+
 var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_24_16/FeatureServer/0';
 var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
 
-active =  L.layerGroup();
+active = L.layerGroup();
 line1 = L.layerGroup();
 line2 = L.layerGroup();
 line3 = L.layerGroup();
@@ -46,20 +49,28 @@ function slideChange(time1, time2, service) {
     if (typeof pings !== 'undefined')
         // your code here.
         removeAllLayers();
-    
-    pings  = L.esri.featureLayer({
+
+    pings = L.esri.featureLayer({
         url: service
     })
 
     pings.setWhere("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
     pings.bindPopup(function (layer) {
-                        return L.Util.template('<h3>{date_cst2}</h3>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
-                    });;
+        return L.Util.template('<h3>{date_cst2}</h3>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
+    });;
     pings.addTo(map);
 
     pings.query().bounds(function (error, latlngbounds) {
         map.fitBounds(latlngbounds);
-      });
+    });
+
+    // var heatmap = L.esri.Heat.featureLayer({
+    //     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0',
+    //     radius: 27,
+    //     start: time1,
+    //     end: time2
+    // }).addTo(map);
+    // heatmap.addTo(active);
 };
 
 
@@ -258,6 +269,13 @@ var route1 = L.esri.featureLayer({
 }).addTo(map);
 route1.addTo(line1);
 
+// line1.on('mouseover', function () {
+//     this.setText('  ►  ', { repeat: true, attributes: { fill: 'red' } });
+// });
+
+// line1.on('mouseout', function () {
+//     this.setText(null);
+// });
 
 var route2 = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/line_8_24_16/FeatureServer/0',
@@ -280,7 +298,7 @@ var route3 = L.esri.featureLayer({
         return { color: c, opacity: o, weight: 5 };
     }
 }).addTo(map);
-route3.addTo(line3);
+
 
 $("#clearMap").click(function () {
     removeAllLayers();
