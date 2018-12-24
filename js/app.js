@@ -1,10 +1,38 @@
-$(function () {
-    $("#legend").toggle(function () {
-        $(this).animate({right:'0px'}, {queue: false, duration: 500});
-    }, function () {
-        $(this).animate({right:'-200px'}, {queue: false, duration: 500});
-    });
+$('#filter-menu-toggle').click(function() {
+    // $('.slider').removeClass('mobile');
+    // $('.slider').removeClass('desktop');
+    // $('.slider').removeClass('toggled');
+    $('.slider').toggleClass('desktop');
+    //markerOnClick()
 });
+
+$('#reset').click(function() {
+    $('.slider').removeClass('desktop');
+});
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Select Markers on click
+
+// $( '.closebtn' ).click(function() {
+//     //alert( "Handler for .click() called." );
+    
+//   });
+
+// var $window = $(window);
+
+// function markerOnClick() {
+
+//     var windowsize = $window.width();
+//     // less than and has class
+//     if (windowsize > 450) {
+//         $('.slider').removeClass('mobile');
+//         $('.slider').addClass('desktop');
+//     }// less than and no class
+//     else if (windowsize < 450) {
+//         $('.slider').removeClass('desktop');
+//         $('.slider').addClass('mobile');
+//     }
+// }
 
 
 var startDateQuery = '7/28/16 12:01:00 AM';
@@ -260,9 +288,9 @@ $("#slider-range3").slider({
         slideChange(time1, time2, myService3)
     }
 });
-$(".closebtn").click(function () {
-    $(".bs-example").slideToggle();
-});
+// $(".closebtn").click(function () {
+//     $(".bs-example").slideToggle();
+// });
 
 
 //add lines

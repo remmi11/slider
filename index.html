@@ -50,7 +50,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- <li class="active"><a href="#">Home</a></li>
                     <li><a href="#">About</a></li> -->
-                    <li><a class="closebtn" href="#"><i class="fa fa-sliders fa-2x" aria-hidden="true"></i></a></li>
+                    <li id="filter-menu-toggle"><a class="closebtn" href="#"><i class="fa fa-sliders fa-2x" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -58,75 +58,99 @@
         <!--/.container-fluid -->
     </nav>
 
-    <div id="map"></div>
-    <!-- <button id="clearMap"></button> -->
-    <div class="container bs-example">
-        <div class="panel-group" id="accordion">
-            <div class="panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            7/28/16
-                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="slidecontainer">
-                            <p>Time Range: <span class="slider-time1_1">9:00 AM</span> - <span class="slider-time1_2">5:00
-                                    PM</span></p>
-                            <div class="sliders_step1">
-                                <div id="slider-range1"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="slider">
+        <div class="top-bar">
+            <div class="feature-name">Filter Times
             </div>
-            <div class="panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            8/24/16
-                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="slidecontainer">
-                            <p>Time Range: <span class="slider-time2_1">9:00 AM</span> - <span class="slider-time2_2">5:00
-                                    PM</span></p>
-                            <div class="sliders_step1">
-                                <div id="slider-range2"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            8/28/16
-                            <i class="fa fa-angle-down pull-right" style="font-size:24px"></i>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="slidecontainer">
-                            <p>Time Range: <span class="slider-time3_1">9:00 AM</span> - <span class="slider-time3_2">5:00
-                                    PM</span></p>
-                            <div class="sliders_step1">
-                                <div id="slider-range3"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <span class="pull-right">
+                <a href="#" id="reset">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </span>
         </div>
+        <!-- <div class="info"> -->
+            <!-- <div class="product-thumbnail">
+            </div>
+            <div class="feature-details">
+            </div>
+            <div class="web-link">
+            </div> -->
+            <div class="container bs-example">
+                <div class="panel-group" id="accordion">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    7/28/16
+                                    <i class="fa fa-sliders pull-right" style="font-size:24px"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="slidecontainer">
+                                    <p>Time Range: <span class="slider-time1_1">12:00 AM</span> - <span class="slider-time1_2">12:00
+                                            PM</span></p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-range1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                    8/24/16
+                                    <i class="fa fa-sliders pull-right" style="font-size:24px"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="slidecontainer">
+                                    <p>Time Range: <span class="slider-time2_1">12:00 AM</span> - <span class="slider-time2_2">12:00
+                                            PM</span></p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-range2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                    8/28/16
+                                    <i class="fa fa-sliders pull-right" style="font-size:24px"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="slidecontainer">
+                                    <p>Time Range: <span class="slider-time3_1">12:00 AM</span> - <span class="slider-time3_2">12:00
+                                            PM</span></p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-range3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
     </div>
+
+    <!-- <button id="clearMap"></button> -->
+
+
+    <div id="map"></div>
+
+
     <script src="js/app.js"></script>
 </body>
 

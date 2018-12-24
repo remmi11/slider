@@ -1,15 +1,17 @@
-html,
-body {
+html, body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    min-height: 100%;
+    background-color: #15253b;
 }
 
 #map {
+    position: fixed;
     width: 100%;
     height: 100%;
-    position: fixed;
+    z-index: -1;
 }
 
 .ui-slider-horizontal {
@@ -114,10 +116,14 @@ body {
     outline: none;
 }
 
-#slider-range {
+.panel  {
+    width: 100%;
+}
+
+/* #slider-range {
     width: 90%;
     margin: 0 auto;
-}
+} */
 
 .custom-popup {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#252525+19,f5f5f5+19 */
@@ -140,10 +146,10 @@ body {
     color: #ffffff;
 }
 
-/* .bs-example {
+.bs-example {
   background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  /* border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); */
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   z-index: 3;
   position: relative;
@@ -151,7 +157,7 @@ body {
   padding: 0px 20px;
   bottom: 0px;
   width: 100%;
-} */
+}
 
 /* 
 .closebtn {
@@ -162,22 +168,12 @@ body {
 } */
 .navbar {
     margin-bottom: 0px;
-}
-
-.bs-example {
-    z-index: 1000;
-    /* bottom: -200px; */
-    height: 140px;
-    width: 100%;
-    display: none;
-    position:absolute;
-    left:0;
-    bottom:0;
-}
-
-.navbar {
     border-radius: 0px;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
 }
+
 
 .navbar-brand {
     margin-top: 5px;
@@ -195,7 +191,74 @@ body {
     background-color: #1077bd;
 }
 
+#clickme {
+    position: absolute;
+    transform: rotate(-90deg);
+    z-index: 100;
+    bottom: 33px;
+    padding: 10px;
+    /* top: 0; */
+    left: -60px;
+    /* width: 100%; */
+    background: #d49a66;
+    color: white;
+    font-weight: 500;
+    border-radius: 2px;
+}
 
-.navbar .container-fluid {
-    margin-bottom: 0px;
+
+@media screen and  (min-width: 768px) {
+
+.slider.desktop {
+    left: 55%;
+    width: 45%;
+}
+}
+
+@media screen and  (min-width: 1000px) {
+.slider.desktop {
+    left: 73%;
+    width: 27%;
+}
+}
+.top-bar {
+    height: 55px;
+    padding: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    background-color: #032447;
+    margin: 0;
+    /* position: static; */
+    width: 100%;
+}
+
+#filter-menu-toggle .fa {
+    /* position: fixed; */
+    color: #fff;
+    z-index: 999;
+}
+
+.feature-name {
+    display: inline-block;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.slider {
+    position: fixed;
+    width: 100%;
+    /* height: calc(100% - 115px); */
+    height: 100%;
+    left: 100%;
+    /* top: 0; */
+    background: #fff;
+    transition: left 1s;
+    overflow: scroll;
+    z-index: 2;
+}
+
+.glyphicon {
+    color: #ffffff;
+    margin-top: 4px;
 }
