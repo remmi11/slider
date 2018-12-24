@@ -179,6 +179,10 @@ body {
     border-radius: 0px;
 }
 
+.navbar-brand {
+    margin-top: 5px;
+}
+
 #clearMap {
     z-index: 1000;
     /* bottom: -200px; */
@@ -189,4 +193,9 @@ body {
     left:50px;
     bottom:200px;
     background-color: #1077bd;
+}
+
+
+.navbar .container-fluid {
+    margin-bottom: 0px;
 }

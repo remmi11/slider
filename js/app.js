@@ -1,3 +1,12 @@
+$(function () {
+    $("#legend").toggle(function () {
+        $(this).animate({right:'0px'}, {queue: false, duration: 500});
+    }, function () {
+        $(this).animate({right:'-200px'}, {queue: false, duration: 500});
+    });
+});
+
+
 var startDateQuery = '7/28/16 12:01:00 AM';
 var endDateQuery = '7/28/16 11:59:00 PM';
 
@@ -282,7 +291,7 @@ var route2 = L.esri.featureLayer({
     style: function (feature) {
         var c, o;
         o = 0.75;
-        c = '#007D7D';
+        c = '#21c579';
         return { color: c, opacity: o, weight: 5 };
     }
 }).addTo(map);
