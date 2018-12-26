@@ -3,12 +3,38 @@ $('#filter-menu-toggle').click(function() {
     // $('.slider').removeClass('desktop');
     // $('.slider').removeClass('toggled');
     $('.slider').toggleClass('desktop');
-    //markerOnClick()
+    markerOnClick()
 });
 
 $('#reset').click(function() {
     $('.slider').removeClass('desktop');
 });
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Select Markers on click
+var $window = $(window);
+
+function markerOnClick(e) {
+
+    var windowsize = $window.width();
+    // less than and has class
+    if (windowsize > 450) {
+        $('.slider').removeClass('mobile');
+        $('.slider').addClass('desktop');
+    }// less than and no class
+    else if (windowsize < 450) {
+        $('.slider').removeClass('desktop');
+        $('.slider').addClass('mobile');
+    }
+if (!$(this).hasClass("activated")) {
+    //console.log('activated');
+    $('.filter').removeClass('activated');
+    $(this).addClass('activated');
+} else {
+    $(this).removeClass('activated');
+    //console.log('not activated');
+}
+};
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Select Markers on click
@@ -37,7 +63,6 @@ $('#reset').click(function() {
 
 var startDateQuery = '7/28/16 12:01:00 AM';
 var endDateQuery = '7/28/16 11:59:00 PM';
-
 
 var satellite = L.esri.basemapLayer('Imagery');
 var roads = L.esri.basemapLayer('ImageryTransportation');
@@ -101,13 +126,6 @@ function slideChange(time1, time2, service) {
         map.fitBounds(latlngbounds);
     });
 
-    // var heatmap = L.esri.Heat.featureLayer({
-    //     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0',
-    //     radius: 27,
-    //     start: time1,
-    //     end: time2
-    // }).addTo(map);
-    // heatmap.addTo(active);
 };
 
 
@@ -306,14 +324,6 @@ var route1 = L.esri.featureLayer({
 }).addTo(map);
 route1.addTo(line1);
 
-// line1.on('mouseover', function () {
-//     this.setText('  ►  ', { repeat: true, attributes: { fill: 'red' } });
-// });
-
-// line1.on('mouseout', function () {
-//     this.setText(null);
-// });
-
 var route2 = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/line_8_24_16/FeatureServer/0',
     style: function (feature) {
@@ -340,3 +350,21 @@ var route3 = L.esri.featureLayer({
 $("#clearMap").click(function () {
     removeAllLayers();
 });
+
+var heatmap1 = L.esri.Heat.featureLayer({
+    url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0',
+    radius: 12
+}).addTo(map);
+// heatmap.addTo(active);
+
+var heatmap2= L.esri.Heat.featureLayer({
+    url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_8_24_16/FeatureServer/0',
+    radius: 12
+}).addTo(map);
+// heatmap.addTo(active);
+
+var heatmap3 = L.esri.Heat.featureLayer({
+    url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_8_28_16/FeatureServer/0',
+    radius: 12
+}).addTo(map);
+// heatmap.addTo(active);
