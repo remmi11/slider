@@ -190,7 +190,7 @@ $("#slider-range1").slider({
         //7/28/16 10:43 AM
         var time2 = '7/28/16 ' + hours2 + ':' + minutes2
         $('.slider-time1_2').html(time2);
-        console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+        // console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
         // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
         slideChange(time1, time2, myService1)
     }
@@ -250,7 +250,7 @@ $("#slider-range2").slider({
         //7/28/16 10:43 AM
         var time2 = '8/24/16 ' + hours2 + ':' + minutes2
         $('.slider-time2_2').html(time2);
-        console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+        // console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
         // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
         slideChange(time1, time2, myService2)
     }
@@ -310,7 +310,7 @@ $("#slider-range3").slider({
         //7/28/16 10:43 AM
         var time2 = '8/28/16 ' + hours2 + ':' + minutes2
         $('.slider-time3_2').html(time2);
-        console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
+        // console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
         // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
         slideChange(time1, time2, myService3)
     }
