@@ -37,31 +37,6 @@ if (!$(this).hasClass("activated")) {
 }
 };
 
-//////////////////////////////////////////////////////////////////////////////////////
-// Select Markers on click
-
-// $( '.closebtn' ).click(function() {
-//     //alert( "Handler for .click() called." );
-    
-//   });
-
-// var $window = $(window);
-
-// function markerOnClick() {
-
-//     var windowsize = $window.width();
-//     // less than and has class
-//     if (windowsize > 450) {
-//         $('.slider').removeClass('mobile');
-//         $('.slider').addClass('desktop');
-//     }// less than and no class
-//     else if (windowsize < 450) {
-//         $('.slider').removeClass('desktop');
-//         $('.slider').addClass('mobile');
-//     }
-// }
-
-
 var startDateQuery = '7/28/16 12:01:00 AM';
 var endDateQuery = '7/28/16 11:59:00 PM';
 
@@ -353,6 +328,10 @@ var route3 = L.esri.featureLayer({
 
 $("#clearMap").click(function () {
     removeAllLayers();
+    $('#collapseOne').collapse("hide")
+    $('#collapseTwo').collapse("hide")
+    $('#collapseThree').collapse("hide")
+
 });
 
 var heatmap1 = L.esri.Heat.featureLayer({
