@@ -1,13 +1,14 @@
 $('#filter-menu-toggle').click(function() {
-    // $('.slider').removeClass('mobile');
-    // $('.slider').removeClass('desktop');
-    // $('.slider').removeClass('toggled');
+    $('.slider').toggleClass('mobile');
     $('.slider').toggleClass('desktop');
-    markerOnClick()
+    // $('.slider').removeClass('toggled');
 });
-
 $('#reset').click(function() {
+    $('.slider').removeClass('mobile');
     $('.slider').removeClass('desktop');
+    // $('.slider').removeClass('toggled');
+    // $('#userSearch').val("");
+    $('#reset').removeClass('activated');
 });
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -67,10 +68,8 @@ var endDateQuery = '7/28/16 11:59:00 PM';
 var satellite = L.esri.basemapLayer('Imagery');
 var roads = L.esri.basemapLayer('ImageryTransportation');
 var topographic = L.esri.basemapLayer('Topographic');
-var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0';
-//var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/7_28_16(3)/FeatureServer/0';
-//     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0',
 
+var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_7_28_16/FeatureServer/0';
 var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_24_16/FeatureServer/0';
 var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
 
@@ -81,7 +80,7 @@ line3 = L.layerGroup();
 
 function removeAllLayers() {
     active.clearLayers();
-    map.removeLayer(pings)
+    // map.removeLayer(pings)
 }
 
 var basemaps = {
@@ -102,10 +101,13 @@ var map = L.map('map', {
     layers: [topographic, line1, line2, line3]
 });
 
-L.control.layers(basemaps, overlayMaps).addTo(map);
+// Add a layer control element to the map
+layerControl = L.control.layers(basemaps, overlayMaps, {position: 'bottomleft'});
+layerControl.addTo(map);
 
 
-var pings
+var pings;
+
 function slideChange(time1, time2, service) {
 
     if (typeof pings !== 'undefined')
@@ -116,13 +118,18 @@ function slideChange(time1, time2, service) {
         url: service
     })
 
+
     pings.setWhere("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
     pings.bindPopup(function (layer) {
         return L.Util.template('<h3>{date_cst2}</h3>Unit ID: {Unit_ID}<br>Lat: {Ping_Latitude}<br>Long: {Ping_Longitude}</p>', layer.feature.properties);
-    });;
-    pings.addTo(map);
+    });
 
+    pings.addTo(active);
+    active.addTo(map);
+
+    // map.fitBounds(active);
     pings.query().bounds(function (error, latlngbounds) {
+        //console.log(latlngbounds);
         map.fitBounds(latlngbounds);
     });
 
@@ -188,6 +195,7 @@ $("#slider-range1").slider({
         slideChange(time1, time2, myService1)
     }
 });
+
 //8/24/16
 $("#slider-range2").slider({
     range: true,
@@ -247,6 +255,7 @@ $("#slider-range2").slider({
         slideChange(time1, time2, myService2)
     }
 });
+
 //8/28/16
 $("#slider-range3").slider({
     range: true,
@@ -306,13 +315,8 @@ $("#slider-range3").slider({
         slideChange(time1, time2, myService3)
     }
 });
-// $(".closebtn").click(function () {
-//     $(".bs-example").slideToggle();
-// });
 
-
-//add lines
-
+//add lines to map
 var route1 = L.esri.featureLayer({
     url: 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/line_7_28_16/FeatureServer/0',
     style: function (feature) {
