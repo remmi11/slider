@@ -272,3 +272,8 @@ html, body {
     border: none;
 
 }
+
+.myDivIcon {
+    text-align: center; /* Horizontally center the text (icon) */
+    /* line-height: 40px; */
+}

@@ -60,6 +60,7 @@ var active = L.layerGroup();
 var line1 = L.layerGroup();
 var line2 = L.layerGroup();
 var line3 = L.layerGroup();
+var icons = L.layerGroup();
 
 function removeAllLayers() {
     active.clearLayers();
@@ -76,13 +77,14 @@ var basemaps = {
 var overlayMaps = {
     "7/28/16": line1,
     "8/24/16": line2,
-    "8/28/16": line3
+    "8/28/16": line3,
+    "POIs": icons
 };
 
 var map = L.map('map', {
     center: [32.30106302536928, -103.501510620117],
     zoom: 10,
-    layers: [topographic, line1, line2, line3]
+    layers: [topographic, line1, line2, line3, icons]
 });
 
 var circleGroup = L.layerGroup().addTo(map);
@@ -446,7 +448,7 @@ map.on('draw:created', function (e) {
                             pings = layer.feature.properties.date_cst
                             // times.push(time.substr(time.length - 8).trim())
                             times.push(pings);
-                       }
+                        }
                     }).addTo(circleGroup);
                 }
             }
@@ -470,4 +472,37 @@ map.on('draw:created', function (e) {
 
     };
 
+});
+
+
+// load GeoJSON from an external file.  
+//Replace URL below to point to your GeoJSON
+$.getJSON("js/pois.geojson", function (data) {
+    //Create bike icon to style points
+    // var bikeIcon = L.icon({
+    //     icon: L.divIcon({
+    //         html: '<i class="fa fa-truck" style="color: red"></i>',
+    //         iconSize: [20, 20],
+    //         className: 'myDivIcon'
+    //       })
+    // });
+
+    var bikeIcon = L.divIcon({
+        html: '<i class="fa fa-truck fa-2x" style="color: black"></i>',
+        className: 'myDivIcon'
+    })
+
+
+    // add GeoJSON layer to the map once the file is loaded
+    var pois = L.geoJson(data, {
+        pointToLayer: function (feature, latlng) {
+            //Create Bike Icon Marker
+            var marker = L.marker(latlng, { icon: bikeIcon });
+            //To show the fields in your data, replace the field names in the {} to match your data
+            marker.bindPopup(feature.properties.Zone_Name);
+            return marker;
+        }
+        //add data layer containing bike crash data to the map
+    }).addTo(map);
+    pois.addTo(icons)
 });
