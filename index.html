@@ -23,11 +23,10 @@
     <!-- Load Heatmap Feature Layer from CDN -->
     <script src="https://unpkg.com/esri-leaflet-heatmap@2.0.0"></script>
 
-    <!-- mapbox for basemaps -->
-    <!-- <script src="bower_components/mapbox.js/mapbox.js "></script> -->
-
-
-    <!-- <script src="bower_components\leaflet-polylinedecorator\dist\leaflet.polylineDecorator.js"></script> -->
+    <!-- leaflet draw -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/5.1.5/turf.min.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -144,10 +143,27 @@
                 </div>
             </div>
         </div>
-        <div class="container utilities">
-            <h3>Map Controls</h3>
-            <button type="button" id="clearMap" class="btn btn-default" aria-label="Left Align">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Clear Map</button>
+        <!-- <div class="container utilities"> -->
+        <div class="panel panel-default additional">
+            <div class="panel-heading">Additional Controls</div>
+            <div class="panel-body">
+                <button type="button" id="clearMap" class="btn btn-default" aria-label="Left Align">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> Clear Map</button>
+                <div id="msgCenter">
+                    <h3>Trucks Duration: <span id="helpIcon" data-toggle="tooltip" title="Use draw tools (left side) to select an area of duration."><i
+                            class="fa fa-question-circle"></i>
+                        </span>
+
+                        </h3>
+                    <p>
+                        Hours: <span id="hours"></span>
+                    </p>
+                    <p>
+                        Minutes: <span id="minutes"></span>
+                    </p>
+                    <!-- </div> -->
+                </div>
+            </div>
         </div>
     </div>
 

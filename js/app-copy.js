@@ -49,11 +49,8 @@ var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/serv
 var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
 
 var query;
-var circles;
 var trucks;
 var service;
-var time1;
-var time2;
 var times = [];
 
 var active = L.layerGroup();
@@ -63,9 +60,7 @@ var line3 = L.layerGroup();
 
 function removeAllLayers() {
     active.clearLayers();
-    circleGroup.clearLayers();
-};
-
+}
 
 var basemaps = {
     "Satellite": satellite,
@@ -84,8 +79,6 @@ var map = L.map('map', {
     zoom: 10,
     layers: [topographic, line1, line2, line3]
 });
-
-var circleGroup = L.layerGroup().addTo(map);
 
 // Add a layer control element to the map
 layerControl = L.control.layers(basemaps, overlayMaps, { position: 'bottomleft' });
@@ -120,6 +113,8 @@ function slideChange(time1, time2, service) {
     });
 
     active.addTo(map);
+    // return service
+
 };
 
 
@@ -152,7 +147,7 @@ $("#slider-range1").slider({
             hours1 = 12;
             minutes1 = minutes1;
         }
-        time1 = '7/28/16 ' + hours1 + ':' + minutes1
+        var time1 = '7/28/16 ' + hours1 + ':' + minutes1
         $('.slider-time1_1').html(time1);
         var hours2 = Math.floor(ui.values[1] / 60);
         var minutes2 = ui.values[1] - (hours2 * 60);
@@ -175,7 +170,7 @@ $("#slider-range1").slider({
             minutes2 = minutes2 + " AM";
         }
         //7/28/16 10:43 AM
-        time2 = '7/28/16 ' + hours2 + ':' + minutes2
+        var time2 = '7/28/16 ' + hours2 + ':' + minutes2
         $('.slider-time1_2').html(time2);
         // console.log("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')")
         // console.log("date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "'")
@@ -213,7 +208,7 @@ $("#slider-range2").slider({
             hours1 = 12;
             minutes1 = minutes1;
         }
-        time1 = '8/24/16 ' + hours1 + ':' + minutes1
+        var time1 = '8/24/16 ' + hours1 + ':' + minutes1
         $('.slider-time2_1').html(time1);
         var hours2 = Math.floor(ui.values[1] / 60);
         var minutes2 = ui.values[1] - (hours2 * 60);
@@ -236,7 +231,7 @@ $("#slider-range2").slider({
             minutes2 = minutes2 + " AM";
         }
         //7/28/16 10:43 AM
-        time2 = '8/24/16 ' + hours2 + ':' + minutes2
+        var time2 = '8/24/16 ' + hours2 + ':' + minutes2
         $('.slider-time2_2').html(time2);
         service = myService2;
         slideChange(time1, time2, service)
@@ -272,7 +267,7 @@ $("#slider-range3").slider({
             hours1 = 12;
             minutes1 = minutes1;
         }
-        time1 = '8/28/16 ' + hours1 + ':' + minutes1
+        var time1 = '8/28/16 ' + hours1 + ':' + minutes1
         $('.slider-time3_1').html(time1);
         var hours2 = Math.floor(ui.values[1] / 60);
         var minutes2 = ui.values[1] - (hours2 * 60);
@@ -295,7 +290,7 @@ $("#slider-range3").slider({
             minutes2 = minutes2 + " AM";
         }
         //7/28/16 10:43 AM
-        time2 = '8/28/16 ' + hours2 + ':' + minutes2
+        var time2 = '8/28/16 ' + hours2 + ':' + minutes2
         $('.slider-time3_2').html(time2);
         service = myService3;
         slideChange(time1, time2, service)
@@ -343,7 +338,7 @@ $("#clearMap").click(function () {
     $('#collapseOne').collapse("hide")
     $('#collapseTwo').collapse("hide")
     $('#collapseThree').collapse("hide")
-    console.log(times);
+
 });
 
 var heatmap1 = L.esri.Heat.featureLayer({
@@ -367,6 +362,7 @@ var heatmap3 = L.esri.Heat.featureLayer({
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // select features using turf within
+
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 
@@ -375,9 +371,6 @@ var drawControl = new L.Control.Draw({
     draw: {
         polyline: false,
         polygon: false,
-        marker: false,
-        circlemarker: false,
-        circle: false,
         rectangle: {
             shapeOptions: {
                 color: 'red'
@@ -390,33 +383,21 @@ var drawControl = new L.Control.Draw({
             showArea: true,
             metric: false,
             repeatMode: true
-        }
+        },
+        circle: false,
+        marker: false,
     },
     edit: {
         featureGroup: drawnItems
     }
 }).addTo(map);
 
-var boundingBoxes;
-var markers;
-var features;
-var d1;
-var d2;
-var difference;
-var hours;
-var minutes;
 
-function empty() {
-    drawnItems = new L.FeatureGroup();
-    times.length = 0;
-    circleGroup.clearLayers();
-};
-
-map.on('draw:drawstart', function (e) {
-    empty();
-});
 
 map.on('draw:created', function (e) {
+
+    times = [];
+    console.log(times);
 
     var type = e.layerType,
         layer = e.layer;
@@ -424,50 +405,66 @@ map.on('draw:created', function (e) {
     if (type === 'rectangle') {
 
         drawnItems.addLayer(layer);
-        boundingBoxes = drawnItems.toGeoJSON();
+        var boundingBoxes = drawnItems.toGeoJSON();
+        //var bbox = turf.extent(created);
 
-        markers = L.esri.query({
+        var markers = L.esri.query({
             url: service
-        }).within(boundingBoxes.features[0]).where("(date_cst BETWEEN DATE '" + time1 + "' AND DATE '" + time2 + "')");
+        }).within(boundingBoxes.features[0]);
 
-        markers.run(function (err, samples, raw) {
-            features = samples.features;
+        markers.run(function (err, censusCollection, raw) {
+            var features = censusCollection.features;
             // loop through the collection of census block points
             for (i = 0; i < features.length; i++) {
                 // if the point is inside (or contained by, the bigger box) draw it in red
                 if (turf.inside(features[i], boundingBoxes.features[0])) {
-                    circles = L.geoJSON(features[i], {
+                    L.geoJSON(features[i], {
                         pointToLayer: function (geoJsonPoint, latlng) {
                             return L.circleMarker(latlng, {
                                 color: '#ff0066'
                             });
                         },
                         onEachFeature: function (feature, layer) {
-                            pings = layer.feature.properties.date_cst
-                            // times.push(time.substr(time.length - 8).trim())
-                            times.push(pings);
-                       }
-                    }).addTo(circleGroup);
+                            times.push(layer.feature.properties.date_cst2)
+                            //layer.bindPopup('<h1>' + feature.properties.date_cst2 + '</h1>');
+                        }
+                    }).addTo(map);
                 }
             }
-            times.sort();
-            d1 = new Date(times[0]);
-            // console.log(d1);
-            d2 = new Date(times[times.length - 1]);
-            // console.log(d2);
-
-            difference = new Date(d2 - d1);
-
-            hours = Math.floor(difference / 36e5)
-            minutes = Math.floor(difference % 36e5 / 60000)
-            document.getElementById("hours").innerHTML = hours
-            document.getElementById("minutes").innerHTML = minutes
-            $('#collapseOne').collapse("hide")
-            $('#collapseTwo').collapse("hide")
-            $('#collapseThree').collapse("hide")
         });
-        // map.fitBounds(circles.getBounds());
+    }
 
-    };
+    console.log(times)
 
+    // var d1 = gregorian(times[0]);
+    // var d2 = gregorian(times[times.length - 1]);
+    // var d1 = times[0];
+    // var d2 = times[times.length - 1];
+
+    // console.log(d1);
+    // console.log(d2);
+
+    //console.log(times[1]);
+
+    // var diff = Math.abs(d1 - d2);
+    // console.log(times);
+    // console.log(diff);
 });
+
+
+function gregorian(times) {
+    // // convert a Julian number to a Gregorian Date.
+    // //7/28/16 10:22 AM
+    // if (string.length === 5) {
+    //     var D = string.substring(2,4)
+    //     var M = string.substring(0,2)
+    //     var Y = '2016'
+    //     var T = string.substring(-7,-1)
+    // }
+    // else {
+    //     console.log(string.length);
+    // }
+    // return new Date(Y,M,D,T);
+
+    for (var i in times) { console.log(i + ' ' + times[i]); }
+}

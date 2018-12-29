@@ -165,7 +165,7 @@ html, body {
     border-style: solid;
     border-color: #BABABA;
     border-width: 2px 0px 0px 0px;
-    /* padding-top: 20px; */
+    padding: 20px;
 }
 /* 
 .closebtn {
@@ -243,7 +243,7 @@ html, body {
     z-index: 2;
 }
 
-.glyphicon {
+#reset {
     color: #ffffff;
     margin-top: 4px;
 }
@@ -265,3 +265,10 @@ html, body {
   .navbar-right {
     float: right!important;
   }
+
+.additional {
+    /* width: 80%;
+    margin: AUTO; */
+    border: none;
+
+}
