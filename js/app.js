@@ -48,6 +48,10 @@ var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/serv
 var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_24_16/FeatureServer/0';
 var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/unique_8_28_16/FeatureServer/0';
 
+// var myService1 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_7_28_16/FeatureServer/0';
+// var myService2 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_8_24_16/FeatureServer/0';
+// var myService3 = 'https://services5.arcgis.com/6gTxIFMxZdWxCrVQ/arcgis/rest/services/all_8_28_16/FeatureServer/0';
+
 var query;
 var circles;
 var trucks;
@@ -453,6 +457,7 @@ map.on('draw:created', function (e) {
                 }
             }
             times.sort();
+            console.log(times);
             d1 = new Date(times[0]);
             // console.log(d1);
             d2 = new Date(times[times.length - 1]);
