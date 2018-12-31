@@ -115,9 +115,10 @@ function slideChange(time1, time2, service) {
         trucks = L.geoJSON(pings, {
             onEachFeature: function (feature, layer) {
                 layer.bindPopup('<h3>' + layer.feature.properties.date_cst2 +
-                    '</h3>Unit ID: ' + layer.feature.properties.Unit_ID +
-                    '<br>Lat: ' + layer.feature.properties.Ping_Latitude +
-                    '<br>Long: ' + layer.feature.properties.Ping_Longitude + '</p>');
+                    '</h3>Unit ID: ' + layer.feature.properties.unit_id +
+                    '<br>Ping ID: ' + layer.feature.properties.ping_id +
+                    '<br>Lat: ' + layer.feature.properties.lat +
+                    '<br>Long: ' + layer.feature.properties.long + '</p>');
             }
         });
         trucks.addTo(active);
@@ -134,7 +135,7 @@ $("#slider-range1").slider({
     range: true,
     min: 0,
     max: 1440,
-    step: 15,
+    step: 30,
     values: [0, 1440],
     slide: function (e, ui) {
         var hours1 = Math.floor(ui.values[0] / 60);
@@ -482,17 +483,9 @@ map.on('draw:created', function (e) {
 
 // load GeoJSON from an external file.  
 //Replace URL below to point to your GeoJSON
-$.getJSON("js/pois.geojson", function (data) {
-    //Create bike icon to style points
-    // var bikeIcon = L.icon({
-    //     icon: L.divIcon({
-    //         html: '<i class="fa fa-truck" style="color: red"></i>',
-    //         iconSize: [20, 20],
-    //         className: 'myDivIcon'
-    //       })
-    // });
+$.getJSON("js/zone_names_all.geojson", function (data) {
 
-    var bikeIcon = L.divIcon({
+    var truckIcon = L.divIcon({
         html: '<i class="fa fa-truck fa-2x" style="color: black"></i>',
         className: 'myDivIcon'
     })
@@ -502,9 +495,9 @@ $.getJSON("js/pois.geojson", function (data) {
     var pois = L.geoJson(data, {
         pointToLayer: function (feature, latlng) {
             //Create Bike Icon Marker
-            var marker = L.marker(latlng, { icon: bikeIcon });
+            var marker = L.marker(latlng, { icon: truckIcon });
             //To show the fields in your data, replace the field names in the {} to match your data
-            marker.bindPopup(feature.properties.Zone_Name);
+            marker.bindPopup(feature.properties.name);
             return marker;
         }
         //add data layer containing bike crash data to the map
