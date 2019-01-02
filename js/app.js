@@ -400,7 +400,9 @@ var drawControl = new L.Control.Draw({
         }
     },
     edit: {
-        featureGroup: drawnItems
+        featureGroup: drawnItems,
+        remove: false,
+        edit: false
     }
 }).addTo(map);
 
